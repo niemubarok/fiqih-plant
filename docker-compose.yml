@@ -9,10 +9,12 @@ services:
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: root
       WORDPRESS_DB_NAME: wordpress
+      # Set these in Dokploy Environment Variables to the actual domain (e.g. https://example.com)
+      # WP_HOME: https://your-domain.com
+      # WP_SITEURL: https://your-domain.com
     volumes:
-      - ./wp-content/themes/fiqih-plant:/var/www/html/wp-content/themes/fiqih-plant
-      # Persist wp-content so plugins/uploads survive restarts (optional but recommended)
-      # - wp_content:/var/www/html/wp-content
+      # Mount the entire wp-content directory (themes, plugins, uploads)
+      - ./wp-content:/var/www/html/wp-content
 
   db:
     image: mysql:8.0
@@ -22,6 +24,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db_data:/var/lib/mysql
+      # Initialize database with the dump if the volume is empty
+      - ./init-db:/docker-entrypoint-initdb.d
 
 volumes:
-  db_data: # wp_content:
+  db_data:

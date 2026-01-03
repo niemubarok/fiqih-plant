@@ -1,0 +1,12 @@
+# Ignore node_modules if present
+node_modules/
+
+# Do NOT ignore wp-content as we want to deploy it
+!wp-content/
+
+# Ignore .env file properly
+.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db
